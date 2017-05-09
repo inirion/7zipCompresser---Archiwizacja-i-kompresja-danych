@@ -6,4 +6,3 @@ c:\users\grzegorz kokoszka\documents\visual studio 2015\Projects\7zipCompression
 c:\users\grzegorz kokoszka\documents\visual studio 2015\Projects\7zipCompression\7zipCompression\obj\Debug\7zipCompression.csproj.GenerateResource.Cache
 c:\users\grzegorz kokoszka\documents\visual studio 2015\Projects\7zipCompression\7zipCompression\obj\Debug\7zipCompression.exe
 c:\users\grzegorz kokoszka\documents\visual studio 2015\Projects\7zipCompression\7zipCompression\obj\Debug\7zipCompression.pdb
-c:\users\grzegorz kokoszka\documents\visual studio 2015\Projects\7zipCompression\7zipCompression\obj\Debug\7zipCompression.csprojResolveAssemblyReference.cache

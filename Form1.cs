@@ -49,7 +49,7 @@ namespace _7zipCompression
                 sw.WriteLine(Text);
             }
         }
-        public string ReadFromFile(string outputFilePath,string format, string extension)
+        public string ReadFromFile(string outputFilePath, string extension)
         {
             int counter = 0;
             string line;
@@ -59,11 +59,11 @@ namespace _7zipCompression
             while ((line = file.ReadLine()) != null)
             {
                 string[] words = line.Split(':');
-                if(words[0] == extension && words[1] == format)
+                if(words[0] == extension)
                 {
                     string[] methods = words[2].Split('=');
                     file.Close();
-                    return methods[1];
+                    return words[1] +":"+ methods[1];
                 }
                 counter++;
             }
@@ -111,8 +111,6 @@ namespace _7zipCompression
             {
                 absolute7zipRoute = openFileDialog1.FileName.ToString();
                 SevenZipPathText.Text = absolute7zipRoute;
-                string met =  ReadFromFile(@"CompressionInformation.data", "zip", "bin");
-                Console.WriteLine(met);
             }
         }
 
@@ -411,7 +409,7 @@ namespace _7zipCompression
 
         private void SelectBestCompressionButton_Click(object sender, EventArgs e)
         {
-            if (formatBox.SelectedIndex != -1 && (FilePath.Text != "Plik do kompresji" || FolderPath.Text != "Folder do kompresji"))
+            if ((FilePath.Text != "Plik do kompresji" || FolderPath.Text != "Folder do kompresji"))
             {
                 string[] files = SelectedFilesText.Lines;
                 List<string> extensions = new List<string>();
@@ -423,7 +421,7 @@ namespace _7zipCompression
                     if (Path.GetExtension(files[i]) == "")
                     {
                         directories = Directory.GetFiles(files[i]);
-
+                        
                         for (int j = 0; j < directories.Length; j++)
                         {
                             dirExc.Add(Path.GetExtension(directories[j]));
@@ -437,42 +435,72 @@ namespace _7zipCompression
                 string extension = "*";
                 bool areEqual = extensions.Select(s => s.ToLower()).Distinct().Count() == 1;
                 if (areEqual) extension = extensions[0];
+                string format;
                 switch (extension)
                 {
                     case ".mp3":
-                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", formatBox.Text, "mp3"));
+                        formatBox.SelectedIndex = formatBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "mp3").Split(':')[0]);
+                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "mp3").Split(':')[1]);
                         break;
                     case ".wav":
-                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", formatBox.Text, "wav"));
+                        formatBox.SelectedIndex = formatBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "wav").Split(':')[0]);
+                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "wav").Split(':')[1]);
                         break;
                     case ".bmp":
-                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", formatBox.Text, "bmp"));
+                        format = string.Empty;
+
+                        if (FolderPath.Text.ToLower().Contains("bmpsmall"))
+                            format = "bmpsmall";
+                        if (FolderPath.Text.ToLower().Contains("bmpbig"))
+                            format = "bmpbig";
+
+                        if (FilePath.Text.ToLower().Contains("bmpsmall"))
+                            format = "bmpsmall";
+                        if (FilePath.Text.ToLower().Contains("bmpbig"))
+                            format = "bmpbig";
+                        Console.WriteLine(format);
+                        formatBox.SelectedIndex = formatBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", format).Split(':')[0]);
+                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", format).Split(':')[1]);
                         break;
                     case ".jpg":
-                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", formatBox.Text, "jpg"));
+                        format = string.Empty;
+                       
+                        if (FolderPath.Text.ToLower().Contains("jpgsmall"))
+                            format = "jpgsmall";
+                        if (FolderPath.Text.ToLower().Contains("jpgbig"))
+                            format = "jpgbig";
+
+                        if (FilePath.Text.ToLower().Contains("jpgsmall"))
+                            format = "jpgsmall";
+                        if (FilePath.Text.ToLower().Contains("jpgbig"))
+                            format = "jpgbig";
+                        Console.WriteLine(format);
+                        formatBox.SelectedIndex = formatBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", format).Split(':')[0]);
+                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", format).Split(':')[1]);
                         break;
                     case ".txt":
-                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", formatBox.Text, "txt"));
+                        formatBox.SelectedIndex = formatBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "txt").Split(':')[0]);
+                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "txt").Split(':')[1]);
                         break;
                     case ".mov":
-                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", formatBox.Text, "mov"));
+                        formatBox.SelectedIndex = formatBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "mov").Split(':')[0]);
+                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "mov").Split(':')[1]);
                         break;
                     case ".mp4":
-                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", formatBox.Text, "mp4"));
+                        formatBox.SelectedIndex = formatBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "mp4").Split(':')[0]);
+                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "mp4").Split(':')[1]);
                         break;
                     case ".mpg":
-                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", formatBox.Text, "mpg"));
+                        formatBox.SelectedIndex = formatBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "mpg").Split(':')[0]);
+                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "mpg").Split(':')[1]);
                         break;
                     default:
-                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", formatBox.Text, "*"));
+                        formatBox.SelectedIndex = formatBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "*").Split(':')[0]);
+                        methodBox.SelectedIndex = methodBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", "*").Split(':')[1]);
                         break;
                 }
                 extensions.Clear();
                 dirExc.Clear();
-            }
-            if(formatBox.SelectedIndex == -1)
-            {
-                MessageBox.Show("Proszę wybrać format docelowy (zip/7z)");
             }
             if(FilePath.Text == "Plik do kompresji" && FolderPath.Text == "Folder do kompresji")
             {
@@ -517,7 +545,6 @@ namespace _7zipCompression
             methodBox.Items.Clear();
             FilePath.Text = "Plik do kompresji";
             FolderPath.Text = "Folder do kompresji";
-
         }
     }
 }
