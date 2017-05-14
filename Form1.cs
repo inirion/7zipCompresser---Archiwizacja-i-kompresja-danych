@@ -436,6 +436,7 @@ namespace _7zipCompression
                 bool areEqual = extensions.Select(s => s.ToLower()).Distinct().Count() == 1;
                 if (areEqual) extension = extensions[0];
                 string format;
+                
                 switch (extension)
                 {
                     case ".mp3":
@@ -449,14 +450,14 @@ namespace _7zipCompression
                     case ".bmp":
                         format = string.Empty;
 
-                        if (FolderPath.Text.ToLower().Contains("bmpsmall"))
+                        if (FolderPath.Text.ToLower().Contains("small"))
                             format = "bmpsmall";
-                        if (FolderPath.Text.ToLower().Contains("bmpbig"))
+                        if (FolderPath.Text.ToLower().Contains("big"))
                             format = "bmpbig";
 
-                        if (FilePath.Text.ToLower().Contains("bmpsmall"))
+                        if (FilePath.Text.ToLower().Contains("small"))
                             format = "bmpsmall";
-                        if (FilePath.Text.ToLower().Contains("bmpbig"))
+                        if (FilePath.Text.ToLower().Contains("big"))
                             format = "bmpbig";
                         Console.WriteLine(format);
                         formatBox.SelectedIndex = formatBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", format).Split(':')[0]);
@@ -465,14 +466,14 @@ namespace _7zipCompression
                     case ".jpg":
                         format = string.Empty;
                        
-                        if (FolderPath.Text.ToLower().Contains("jpgsmall"))
+                        if (FolderPath.Text.ToLower().Contains("small"))
                             format = "jpgsmall";
-                        if (FolderPath.Text.ToLower().Contains("jpgbig"))
+                        if (FolderPath.Text.ToLower().Contains("big"))
                             format = "jpgbig";
 
-                        if (FilePath.Text.ToLower().Contains("jpgsmall"))
+                        if (FilePath.Text.ToLower().Contains("small"))
                             format = "jpgsmall";
-                        if (FilePath.Text.ToLower().Contains("jpgbig"))
+                        if (FilePath.Text.ToLower().Contains("big"))
                             format = "jpgbig";
                         Console.WriteLine(format);
                         formatBox.SelectedIndex = formatBox.FindStringExact(ReadFromFile(@"CompressionInformation.data", format).Split(':')[0]);
